@@ -1,7 +1,8 @@
-# Base worker-comfyui image (ComfyUI + serverless handler already inside).
-# Check Docker Hub "runpod/worker-comfyui" tags and use the newest X.Y.Z-base.
-FROM runpod/worker-comfyui:5.1.0-base
-
+# Base worker-comfyui image.
+# 5.8.6-base-cuda12.8.1: CUDA 12.8 adds Blackwell (sm_120) support for RTX PRO 6000.
+# The older 5.1.0-base lacked it -> "CUDA error: no kernel image available".
+FROM runpod/worker-comfyui:5.8.6-base-cuda12.8.1
+ 
 # Install every custom node the workflow requires, together with their Python deps.
 # comfy-node-install pulls each node from the ComfyUI registry and runs its requirements.
 # Derived from a full parse of workflow_api.json (59 nodes):
@@ -14,7 +15,7 @@ RUN comfy-node-install \
       comfyui-impact-pack \
       comfyui-impact-subpack \
       comfyui_controlnet_aux
-
+ 
 # Tell ComfyUI to also read models from the network volume (/runpod-volume).
 # ComfyUI auto-loads extra_model_paths.yaml from its base dir (/comfyui) at startup.
 COPY extra_model_paths.yaml /comfyui/extra_model_paths.yaml
