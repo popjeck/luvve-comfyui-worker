@@ -1,4 +1,5 @@
-# Base worker-comfyui image (ComfyUI + serverless handler already inside).
+# Base worker-comfyui image (ComfyUI + serverless handler already inside). 
+# rebuild v2
 # Check Docker Hub "runpod/worker-comfyui" tags and use the newest X.Y.Z-base.
 FROM runpod/worker-comfyui:5.1.0-base
 
