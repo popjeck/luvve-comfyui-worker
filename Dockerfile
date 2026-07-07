@@ -3,6 +3,11 @@
 # The older 5.1.0-base lacked it -> "CUDA error: no kernel image available".
 FROM runpod/worker-comfyui:5.8.6-base-cuda12.8.1
 
+# Impact-Subpack imports cv2 (OpenCV), which is not present in this base image.
+# Without it the subpack fails to load and UltralyticsDetectorProvider goes missing.
+# opencv-python-headless is the server-safe build (no GUI/X11 deps).
+RUN pip install --no-cache-dir opencv-python-headless
+
 # Install every custom node the workflow requires, together with their Python deps.
 # comfy-node-install pulls each node from the ComfyUI registry and runs its requirements.
 # Derived from a full parse of workflow_api.json (59 nodes):
