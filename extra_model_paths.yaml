@@ -1,0 +1,21 @@
+# Tell ComfyUI (inside the worker image) to also read models from the RunPod
+# network volume, in addition to its own internal /comfyui/models folders.
+#
+# IMPORTANT: on SERVERLESS the volume is mounted at /runpod-volume
+# (on the pod it was /runpod-slim - do NOT use that here).
+#
+# Verified against the actual volume layout:
+#   /runpod-volume/ComfyUI/models/checkpoints
+#   /runpod-volume/ComfyUI/models/loras
+#   /runpod-volume/ComfyUI/models/vae
+#   /runpod-volume/ComfyUI/models/sams
+#   /runpod-volume/ComfyUI/models/ultralytics/{bbox,segm}
+runpod_volume:
+  base_path: /runpod-volume/ComfyUI/models/
+  checkpoints: checkpoints
+  loras: loras
+  vae: vae
+  sams: sams
+  ultralytics: ultralytics
+  ultralytics_bbox: ultralytics/bbox
+  ultralytics_segm: ultralytics/segm
